@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../public/main.css">
+    <title>Mystery Game</title>
+  </head>
+  <body>
+    <div class="header_container">
+      <div>
+        <p class="title">Mystery Word</p>
+      </div>
+      <div>
+        <p class="guesses">You have {{num}} guesses left</p>
+      </div>
+    </div>
+    <div class="word_container">
+      {{word}}
+    </div>
+    <form class="letter_choice" action="home.mustache" method="post">
+      <input type="text" name="input" >
+      <button type="submit" name="submit">Make a guess</button>
+    </form>
+    <div>
+      <p>
+        Letters guessed: {{letters}}
+      </p>
+    </div>
+  </body>
+</html>
