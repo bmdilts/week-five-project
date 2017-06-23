@@ -18,17 +18,20 @@ app.use('/public', express.static('public'));
 const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n");
 const letters = ["none"]
 const word = words[(Math.floor(Math.random() * words.length))];
+var spaces = []
 const displayWord = function(){
   for(i = 0; i < word.length; i++){
-    let spaces = 
-  }
-}
-const tags = {num: 8, word: word, letters: letters}
+    spaces.push("_");
+  };
+  return spaces.join(" ");
+};
+const tags = {num: 8, word: displayWord, letters: letters}
 // var tags = [req.body.num, req.body.word, req.body.letters]
 
 app.get("/", function(req, res){
   if(!req.session.word){
     req.session.word = word;
+    console.log(req.session.word);
   }
   res.render("home", {tags: tags});
 });
