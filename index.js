@@ -22,62 +22,71 @@ const word = words[(Math.floor(Math.random() * words.length))];
 const letters = ["none"]
 const wordUp = word.toUpperCase();
 const wordArr = (wordUp.split(""));
-
+spaces = [];
+var displayWord = "";
 
 function x(){
-    spaces = []
     for(i = 0; i < word.length; i++){
       spaces.push("_");
     };
-    displayWord = spaces.join(" ");
     return spaces;
 };
 
 x();
+// var displayWord = spaces.join(" ");
 
-const tags = {num: 8, word: spaces, letters: letters}
+const tags = {num: 8, word: displayWord, letters: letters};
 
 // var tags = [req.body.num, req.body.word, req.body.letters]
 
 app.get("/", function(req, res){
   if(!req.session.word){
     req.session.word = word;
+    req.session.num = 8;
+    req.session.letters = [];
     console.log(req.session.word);
   }
+  req.session.displayWord = spaces.join(" ");
+  const tags = {num: req.session.num, word: req.session.displayWord, letters: req.session.letters};
   res.render("home", {tags: tags});
 });
+
 app.post("/", function(req, res){
   req.checkBody('input', 'Invalid guess!')
     .isLength({max: 1})
 
   const errors = req.validationErrors();
   var input = req.body.input.toUpperCase();
-  console.log(input);
-
   if (errors) {
     res.send(errors);
-  } else if (letters.includes(input)){
+  } else if (req.session.letters.includes(input)){
       console.log("Letter already guessed, try again!");
       input = "";
-      console.log(input)
   } else if(wordArr.includes(input)){
     for(let i = 0; i < wordArr.length; i++){
       if(wordArr[i] === input){
         spaces.splice(i, 1, input);
-        console.log(spaces);
-        displayWord = spaces.join(" ");
+        req.session.displayWord = spaces.join(" ");
       }
     }
   } else {
-      tags.num--;
-    }
+      req.session.num--;
+    };
+
   if(input !== ""){
-    letters.push(input);
-  }
+    req.session.letters.push(input);
+  };
+
+  if(req.session.num === 0){
+    console.log("You lose!")
+  };
+
+  if(!req.session.displayWord.includes("_")){
+    console.log("You win!")
+  };
   res.redirect('/');
 });
 
-// spaces.splice(wordArr.findIndex(input), 1 input)
 
 
 app.listen(3000, function(){
