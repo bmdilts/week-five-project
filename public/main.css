@@ -2,8 +2,14 @@ body{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
   font-family: sans-serif;
+  background-image: url("images/abstract-comic-book-background_1055-2509.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left;
+  padding: 10% 15% 0 15%;
+  font-weight: 300;
+  color: white;
 }
 .header_container{
   display: flex;
@@ -11,6 +17,7 @@ body{
   width: 90%;
   margin-bottom: 5%;
   justify-content: space-between;
+  font-size: 1.5em;
 }
 .word_container{
   margin: 2.5%;
@@ -23,10 +30,20 @@ input{
   height: 1.5em;
   width: 3em;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 2em;
 }
-#submit{
-  height: 1em;
-  width: 5em;
+.submit{
+  height: 2em;
+  width: fit-content;
   font-size: 1em;
+  margin-bottom: .5em;
+  margin-left: 1em;
+  box-shadow: 0 2px 2px 0 grey;
+}
+.loser{
+  font-size: 2em;
+  text-align: center;
+}
+.xyz{
+  font-size: 1.25em;
 }
