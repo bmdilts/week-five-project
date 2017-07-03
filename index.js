@@ -45,27 +45,28 @@ app.get("/", function(req, res){
     function x(){
       spaces = [];
       for(i = 0; i < word.length; i++){
-        spaces.push("_");
+        spaces.push('_');
       };
       return spaces;
     }; x();
     const wordUp = word.toUpperCase();
-    req.session.wordArr = (wordUp.split(""));
+    req.session.wordArr = (wordUp.split(''));
     req.session.word = word;
     req.session.num = 8;
     req.session.letters = [];
     req.session.win = true;
-    req.session.msg = "";
-    req.session.loserWord = "";
+    req.session.msg = '';
+    req.session.loserWord = '';
+    req.session.loser = req.session.word;
     console.log(req.session.word);
   }
-  req.session.displayWord = spaces.join(" ");
+  req.session.displayWord = spaces.join(' ');
   const tags = {num: req.session.num, word: req.session.displayWord, letters: req.session.letters, win: req.session.win, msg: req.session.msg, loser: req.session.loser};
-  res.render("home", {tags: tags});
+  res.render('home', {tags: tags});
 });
 
 
-app.post("/", function(req, res){
+app.post('/', function(req, res){
   req.checkBody('input', 'Invalid guess!')
     .isLength({min: 1, max: 1})
 
@@ -74,38 +75,38 @@ app.post("/", function(req, res){
   if (errors) {
     res.send(errors);
   } else if (req.session.letters.includes(input)){
-      console.log("Letter already guessed, try again!");
-      input = "";
+      console.log('Letter already guessed, try again!');
+      input = '';
   } else if(req.session.wordArr.includes(input)){
     for(let i = 0; i < req.session.wordArr.length; i++){
       if(req.session.wordArr[i] === input){
         spaces.splice(i, 1, input);
-        req.session.displayWord = spaces.join(" ");
+        req.session.displayWord = spaces.join(' ');
       }
     }
   } else {
       req.session.num--;
-    };
-  if(input !== ""){
+    }
+  if(input !== ''){
     req.session.letters.push(input);
-  };
-  if(!req.session.displayWord.includes("_")){
+  }
+  if(!req.session.displayWord.includes('_')){
     req.session.win = false;
-    req.session.msg = "You win!"
-  };
+    req.session.msg = 'You win!'
+  }
   if(req.session.num === 0){
     req.session.win = false;
-    req.session.msg = "You lose!";
+    req.session.msg = 'You lose!';
     req.session.loser = req.session.word;
-  };
+  }
   res.redirect('/');
 });
 
-app.post("/again", function(req, res){
+app.post('/again', function(req, res){
   req.session.word = null;
   res.redirect('/')
 });
 
 app.listen(3000, function(){
-  console.log("Hey, Listen!")
+  console.log('Hey, Listen!')
 });
