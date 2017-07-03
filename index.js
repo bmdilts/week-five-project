@@ -57,7 +57,7 @@ app.get("/", function(req, res){
     req.session.win = true;
     req.session.msg = '';
     req.session.loserWord = '';
-    req.session.loser = req.session.word;
+    req.session.loser = "";
     console.log(req.session.word);
   }
   req.session.displayWord = spaces.join(' ');
@@ -70,12 +70,13 @@ app.post('/', function(req, res){
   req.checkBody('input', 'Invalid guess!')
     .isLength({min: 1, max: 1})
 
+  req.session.loser = "";
   const errors = req.validationErrors();
   var input = req.body.input.toUpperCase();
   if (errors) {
     res.send(errors);
   } else if (req.session.letters.includes(input)){
-      console.log('Letter already guessed, try again!');
+      req.session.loser = 'Letter already guessed, try again!';
       input = '';
   } else if(req.session.wordArr.includes(input)){
     for(let i = 0; i < req.session.wordArr.length; i++){
@@ -92,7 +93,8 @@ app.post('/', function(req, res){
   }
   if(!req.session.displayWord.includes('_')){
     req.session.win = false;
-    req.session.msg = 'You win!'
+    req.session.msg = 'You win!';
+    req.session.loser = 'You win!';
   }
   if(req.session.num === 0){
     req.session.win = false;
