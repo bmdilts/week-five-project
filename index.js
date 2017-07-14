@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use('/public', express.static('public'));
 app.use(validator());
 
-const words = fs.readFileSync("./data/words", "utf-8").toLowerCase().split("\n");
+const words = fs.readFileSync("./data/web2", "utf-8").toLowerCase().split("\n");
 
 // var word = words[(Math.floor(Math.random() * words.length))];
 // const letters = ["none"]
