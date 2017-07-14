@@ -21,7 +21,7 @@
     {{#win}}
     <form action="/" method="post">
       <p class="loser">{{loser}}</p>
-      <input id="guess" type="text" name="input" >
+      <input id="guess" type="text" name="input" autofocus="true">
       <button class="submit" type="submit" name="submit">Make a guess</button>
     </form>
     {{/win}}
@@ -36,6 +36,9 @@
       <p class="xyz">
         Letters guessed: {{letters}}
       </p>
+    </div>
+    <div>
+      Total Score: {{purple}}
     </div>
     {{/tags}}
   </body>

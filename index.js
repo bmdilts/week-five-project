@@ -39,29 +39,34 @@ var displayWord = "";
 
 // var tags = [req.body.num, req.body.word, req.body.letters]
 
-app.get("/", function(req, res){
+app.get('/', function(req, res){
   if(!req.session.word){
-    word = words[(Math.floor(Math.random() * words.length))];
+    var word = words[(Math.floor(Math.random() * words.length))];
+    spaces = [];
     function x(){
-      spaces = [];
-      for(i = 0; i < word.length; i++){
+      for(let i = 0; i < word.length; i++){
         spaces.push('_');
-      };
+      }
       return spaces;
-    }; x();
+    }
+    x();
     const wordUp = word.toUpperCase();
     req.session.wordArr = (wordUp.split(''));
     req.session.word = word;
-    req.session.num = 8;
+    req.session.num = Math.ceil(word.length * 0.6);
+    req.session.num2 = Math.ceil(word.length * 0.6);
     req.session.letters = [];
     req.session.win = true;
     req.session.msg = '';
     req.session.loserWord = '';
-    req.session.loser = "";
+    req.session.loser = '';
+    if(!req.session.purple){
+      req.session.purple = 0;
+    }
     console.log(req.session.word);
   }
   req.session.displayWord = spaces.join(' ');
-  const tags = {num: req.session.num, word: req.session.displayWord, letters: req.session.letters, win: req.session.win, msg: req.session.msg, loser: req.session.loser};
+  const tags = {num: req.session.num, word: req.session.displayWord, letters: req.session.letters, win: req.session.win, msg: req.session.msg, loser: req.session.loser, purple: req.session.purple};
   res.render('home', {tags: tags});
 });
 
@@ -95,11 +100,13 @@ app.post('/', function(req, res){
     req.session.win = false;
     req.session.msg = 'You win!';
     req.session.loser = 'You win!';
+    req.session.purple += req.session.num;
   }
   if(req.session.num === 0){
     req.session.win = false;
     req.session.msg = 'You lose!';
     req.session.loser = req.session.word;
+    req.session.purple -= req.session.num2;
   }
   res.redirect('/');
 });
@@ -109,6 +116,6 @@ app.post('/again', function(req, res){
   res.redirect('/')
 });
 
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, function(){
   console.log('Hey, Listen!')
 });
