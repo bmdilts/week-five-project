@@ -3,13 +3,21 @@ body{
   flex-direction: column;
   align-items: center;
   font-family: sans-serif;
-  background-image: url("images/abstract-comic-book-background_1055-2509.jpg");
-  background-repeat: no-repeat;
+  background: no-repeat center center fixed;
   background-size: cover;
-  background-position: left;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+  background: darkgrey;
+  background: -moz-radial-gradient(center, ellipse cover, white 0%, darkgrey 100%);
+  background: -webkit-radial-gradient(center, ellipse cover, white 0%, darkgrey 100%);
+  background: -o-radial-gradient(center, ellipse cover, white 0%, darkgrey 100%);
+  background: -ms-radial-gradient(center, ellipse cover, white 0%, darkgrey 100%);
+  background: radial-gradient(ellipse at center, white 0%, darkgrey 100%);
   padding: 10% 15% 0 15%;
   font-weight: 300;
-  color: white;
+  color: black;
+  font-weight: 800;
 }
 .header_container{
   display: flex;
